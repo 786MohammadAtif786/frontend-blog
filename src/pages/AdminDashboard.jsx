@@ -20,7 +20,7 @@ export default function AdminDashboard() {
 
   const publishBlog = async (id) => {
     await axios.put(
-      `${API}api/blogs/publish/${id}`,
+      `${API}/api/blogs/publish/${id}`,
       {},
       { withCredentials: true }
     );
