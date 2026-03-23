@@ -1,0 +1,117 @@
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
+export default function AdminDashboard() {
+  const [blogs, setBlogs] = useState([]);
+    const API = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const res = await axios.get(
+        `${API}/api/blogs/admin`,
+        { withCredentials: true }
+      );
+      setBlogs(res.data);
+    };
+    fetchBlogs();
+  }, []);
+
+  const publishBlog = async (id) => {
+    await axios.put(
+      `${API}api/blogs/publish/${id}`,
+      {},
+      { withCredentials: true }
+    );
+
+    setBlogs((prev) =>
+      prev.map((b) => (b._id === id ? { ...b, isPublished: true } : b))
+    );
+  };
+
+  const deleteBlog = async (id) => {
+    await axios.delete(
+      `${API}/api/blogs/${id}`,
+      { withCredentials: true }
+    );
+
+    setBlogs((prev) => prev.filter((b) => b._id !== id));
+  };
+
+  return (
+    <div className="p-8 bg-gray-100 min-h-screen">
+
+      <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {blogs.map((blog) => (
+
+          <div
+            key={blog._id}
+            className="bg-white shadow rounded-xl overflow-hidden"
+          >
+
+            <img
+              src={blog.image}
+              className="w-full h-40 object-cover"
+            />
+
+            <div className="p-4">
+
+              <h2 className="font-semibold text-lg">
+                {blog.title}
+              </h2>
+
+              <p className="text-sm text-gray-500 mb-2">
+                {blog.author?.name} • {new Date(blog.createdAt).toDateString()}
+              </p>
+
+              <span
+                className={`text-sm font-semibold ${
+                  blog.isPublished
+                    ? "text-green-600"
+                    : "text-yellow-600"
+                }`}
+              >
+                {blog.isPublished ? "Published" : "Draft"}
+              </span>
+
+              <div className="flex gap-2 mt-4">
+
+                <Link
+                  to={`/admin/blog/${blog._id}`}
+                  className="bg-blue-500 text-white px-3 py-1 rounded"
+                >
+                  Preview
+                </Link>
+
+                {!blog.isPublished && (
+                  <button
+                    onClick={() => publishBlog(blog._id)}
+                    className="bg-green-500 text-white px-3 py-1 rounded"
+                  >
+                    Publish
+                  </button>
+                )}
+
+                <button
+                  onClick={() => deleteBlog(blog._id)}
+                  className="bg-red-500 text-white px-3 py-1 rounded"
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        ))}
+
+      </div>
+    </div>
+  );
+}
