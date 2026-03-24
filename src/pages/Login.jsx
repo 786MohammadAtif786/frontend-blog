@@ -45,7 +45,7 @@ export default function Login() {
             toast.success("Login successful");
 
             navigate("/");
-            window.location.reload(); 
+            window.location.reload();
         } catch (err) {
 
             toast.error(
@@ -109,6 +109,15 @@ export default function Login() {
                             className="text-purple-600 font-semibold"
                         >
                             Register
+                        </Link>
+                    </p>
+
+                    
+
+
+                <p className="text-right text-sm mb-3 p-4">
+                        <Link to="/forgot-password" className="text-purple-600 font-semibold">
+                            Forgot Password?
                         </Link>
                     </p>
                 </form>

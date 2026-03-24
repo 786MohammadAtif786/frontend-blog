@@ -23,6 +23,9 @@ import CheckEmail from "./pages/CheckEmail.jsx";
 import Footer from "./components/Footer.jsx";
 import SearchPage from "./pages/SearchPage.jsx"
 import Users from "./pages/Users.jsx";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+
 
 function App() {
 
@@ -155,6 +158,9 @@ function App() {
         {/* <Route path="/write" element={<WriteBlog />} />
           <Route path="/admin" element={<AdminDashboard />} /> */}
         <Route path="/verify/:token" element={<VerifyEmail />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
         <Footer />
@@ -165,7 +171,3 @@ function App() {
 }
 
 export default App;
-
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmFmMDhiYTNlOWZkNDZmZWYzMjJkYyIsImlhdCI6MTc3NDExNTM0MywiZXhwIjoxNzc0MTE2MjQzfQ.paMqdDwsW9L3dMUE1BgxN4E8m0oI3MbfFWAlTM1EWQY
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmFmMDhiYTNlOWZkNDZmZWYzMjJkYyIsImlhdCI6MTc3NDExNTM0MywiZXhwIjoxNzc0MTE2MjQzfQ.paMqdDwsW9L3dMUE1BgxN4E8m0oI3MbfFWAlTM1EWQY
