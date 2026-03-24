@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import logImg from '../assets/logo.png'
 
 export default function Navbar() {
   
@@ -55,70 +56,93 @@ export default function Navbar() {
 
   return (
 
-    <div className="flex justify-between p-4 bg-white shadow">
 
+  <div className="bg-white shadow p-3">
+
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+
+      {/* 🔥 Left Side (Logo + Home) */}
+      <div className="flex items-center justify-between w-full md:w-auto">
+
+
+         <Link to="/" className="flex items-center gap-2 mb-6">
+         
+                 <img
+                   src={logImg}
+                   alt="DevNotes Logo"
+                   className="w-8 h-8 object-contain"
+                 />
+         
+                 <h1 className="text-xl font-bold">
+                   <span className="text-green-500">Dev</span>
+                   <span className="text-blue-600">Notes</span>
+                 </h1>
+         
+               </Link>
+
+      </div>
+
+      {/* 🔥 Search */}
       <input
         type="text"
         placeholder="Search here..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        onKeyDown={handleSearch} // 🔥 important
-        className="border px-4 py-2 rounded "
+        onKeyDown={handleSearch}
+        className="w-full md:w-1/3 border px-4 py-2 rounded"
       />
 
+      {/* 🔥 Right Side */}
       {user ? (
+        <div className="flex flex-wrap items-center justify-center md:justify-end gap-2">
 
-        <div className="flex items-center gap-4">
-
-          <p className="font-semibold">
+          <p className="font-semibold text-sm">
             {user.name}
           </p>
 
-          {/* Write Blog */}
           <Link to="/write">
-            <button className="bg-green-500 text-white px-3 py-1 rounded">
-              Write Blog
+            <button className="bg-green-500 text-white px-3 py-1 rounded text-sm">
+              Write
             </button>
           </Link>
 
-          {/* Admin Button */}
           {user.role === "admin" && (
-            <Link to="/admin">
-              <button className="bg-black text-white px-3 py-1 rounded">
-                Dashboard
-              </button>
-            </Link>
-          )}
-          {user.role === "admin" && (
-            <Link to="/users">
-              <button className="bg-black text-white px-3 py-1 rounded">
-                Users
-              </button>
-            </Link>
+            <>
+              <Link to="/admin" className="hidden md:block">
+                <button className="bg-black text-white px-3 py-1 rounded text-sm">
+                  Dashboard
+                </button>
+              </Link>
+
+              <Link to="/users" className="hidden md:block">
+                <button className="bg-black text-white px-3 py-1 rounded text-sm">
+                  Users
+                </button>
+              </Link>
+            </>
           )}
 
-          {/* Logout */}
           <button
             onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded"
+            className="bg-red-500 text-white px-3 py-1 rounded text-sm"
           >
             Logout
           </button>
 
         </div>
-
       ) : (
-
         <Link
           to="/login"
-          className="bg-purple-600 text-white px-5 py-2 rounded-full"
+          className="bg-purple-600 text-white px-4 py-2 rounded-full text-center"
         >
           Sign In
         </Link>
-
       )}
 
     </div>
+
+  </div>
+
 
   );
 

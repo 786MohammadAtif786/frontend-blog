@@ -25,7 +25,7 @@ export default function BlogCard({ blog }) {
                     </h2>
 
                     <p className="text-sm text-gray-600">
-                        by {blog.author?.name}
+                        by {blog.author?.name || "deleted"}
                     </p>
 
                 </div>

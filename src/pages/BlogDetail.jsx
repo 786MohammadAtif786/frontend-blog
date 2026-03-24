@@ -150,129 +150,109 @@ export default function BlogDetail() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+  <div className="bg-gray-100 prose max-w-none overflow-x-auto">
 
-      {/* Navbar */}
-      <Navbar />
+    {/* Navbar */}
+    <Navbar />
 
-      <div className="flex">
+    <div className="flex flex-col lg:flex-row">
 
-        {/* Sidebar */}
-        <Sidebar />
+      {/* Blog Content */}
+      <div className="flex-1 flex justify-center">
+        <div className="max-w-3xl w-full p-4 lg:p-6">
 
-        {/* Blog Content */}
-        <div className="flex-1 flex justify-center">
-          <div className="max-w-3xl p-6">
+          {/* Title */}
+          <h1 className="text-2xl lg:text-4xl font-bold mb-4">
+            {blog.title}
+          </h1>
 
-            {/* Title */}
-            <h1 className="text-4xl font-bold mb-4">
-              {blog.title}
-            </h1>
-
-            {/* Meta Info */}
-            <div className="flex gap-3 text-gray-500 mb-6 text-sm">
-              <span>Written by {blog.author?.name}</span>
-              <span>•</span>
-              <span>{new Date(blog.createdAt).toDateString()}</span>
-              <span>• {readingTime} min read</span>
-
-              <p className="text-gray-500 text-sm">
-                👁 {blog.views} views
-              </p>
-            </div>
-
-            {/* Image */}
-            <img
-              src={blog.image}
-              alt="blog"
-              className="rounded-xl mb-6 w-full object-cover"
-            />
-
-            {/* ✅ MAIN FIX (HTML Render) */}
-            <div
-              className="prose max-w-none"
-              dangerouslySetInnerHTML={{ __html: blog.content }}
-            ></div>
-
-          </div>
-        </div>
-
-        {/* Right Sidebar */}
-        <div className="w-80 bg-white border-l p-6 hidden lg:block">
-
-          {/* Like Button */}
-          <button
-            onClick={handleLike}
-            disabled={blog.author?._id === user?._id}
-            className="w-full bg-purple-600 text-white py-2 rounded-lg mb-6 hover:bg-purple-700"
-          >
-            👍 Like ({likes})
-          </button>
-
-          {/* Categories */}
-          {/* <h3 className="font-bold mb-3">Categories</h3>
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            {blog.categories?.map((cat) => (
-              <span
-                key={cat}
-                className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm"
-              >
-                {cat}
-              </span>
-            ))}
-          </div> */}
-
-
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            {blog.categories?.map((cat) => (
-              <Link
-                key={cat}
-                to={`/category/${cat}`}
-                className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm hover:bg-purple-200 transition"
-              >
-                {cat}
-              </Link>
-            ))}
+          {/* Meta Info */}
+          <div className="flex flex-wrap gap-2 text-gray-500 mb-4 text-sm">
+            <span>Written by {blog.author?.name || "user deleted"}</span>
+            <span>•</span>
+            <span>{new Date(blog.createdAt).toDateString()}</span>
+            <span>• {readingTime} min read</span>
+            <span>👁 {blog.views} views</span>
           </div>
 
+          {/* Image */}
+          <img
+            src={blog.image}
+            alt="blog"
+            className="rounded-xl mb-6 w-full object-cover"
+          />
 
-          {/* Related Blogs */}
-          <h3 className="font-bold mb-3">Related Posts</h3>
-
-          <div className="space-y-4">
-            {relatedBlogs.map((b) => (
-              <Link
-                key={b._id}
-                to={`/blog/${b._id}`}
-                className="flex gap-3 items-center hover:bg-gray-100 p-2 rounded"
-              >
-                <img
-                  src={b.image}
-                  alt="related"
-                  className="w-16 h-16 object-cover rounded"
-                />
-
-                <div>
-                  <p className="text-sm font-semibold">
-                    {b.title}
-                  </p>
-
-                  <p className="text-xs text-gray-500">
-                    by {b.author?.name}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {/* Content */}
+          <div
+            className="prose max-w-none"
+            dangerouslySetInnerHTML={{ __html: blog.content }}
+          ></div>
 
         </div>
+      </div>
 
+      {/* Sidebar (Responsive) */}
+      <div className="w-full lg:w-80 bg-white border-t lg:border-l p-4 lg:p-6 mt-6 lg:mt-0">
+
+        {/* Like Button */}
+        <button
+          onClick={handleLike}
+          disabled={blog.author?._id === user?._id}
+          className="w-full bg-purple-600 text-white py-2 rounded-lg mb-6 hover:bg-purple-700"
+        >
+          👍 Like ({likes})
+        </button>
+
+        {/* Categories */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {blog.categories?.map((cat) => (
+            <Link
+              key={cat}
+              to={`/category/${cat}`}
+              className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm hover:bg-purple-200 transition"
+            >
+              {cat}
+            </Link>
+          ))}
+        </div>
+
+        {/* Related Blogs */}
+        <h3 className="font-bold mb-3">Related Posts</h3>
+
+        <div className="space-y-4">
+          {relatedBlogs.map((b) => (
+            <Link
+              key={b._id}
+              to={`/blog/${b._id}`}
+              className="flex gap-3 items-center hover:bg-gray-100 p-2 rounded"
+            >
+              <img
+                src={b.image}
+                alt="related"
+                className="w-16 h-16 object-cover rounded"
+              />
+
+              <div>
+                <p className="text-sm font-semibold">
+                  {b.title}
+                </p>
+
+                <p className="text-xs text-gray-500">
+                  by {b.author?.name}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
 
       </div>
-      <CommentSection blogId={id} user={user} />
+
     </div>
-  );
+
+    {/* Comments */}
+    <CommentSection blogId={id} user={user} />
+
+  </div>
+);
 }
 
