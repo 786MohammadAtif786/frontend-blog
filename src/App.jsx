@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./components/Loading.jsx";
 import BlogDetail from "./pages/BlogDetail";
-import AdminBlogDetail from './pages/BlogDetail.jsx'
+import AdminBlogDetail from './pages/AdminBlogDetail.jsx'
 import MyBlogs from "./pages/MyBlogs";
 import CategoryBlogs from "./pages/CategoryBlogs.jsx";
 import CheckEmail from "./pages/CheckEmail.jsx";
@@ -33,12 +33,77 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const API = import.meta.env.VITE_API_URL;
-  useEffect(() => {
+//   useEffect(() => {
 
-    const getUser = async () => {
+//     const getUser = async () => {
+
+//       try {
+
+//         const res = await axios.get(
+//           `${API}/api/v1/me`,
+//           { withCredentials: true }
+//         );
+
+//         setUser(res.data.user);
+
+//       } catch (err) {
+
+//         setUser(null);
+
+//       } finally {
+
+//         setLoading(false);
+
+//       }
+
+//     };
+
+//     getUser();
+
+//   }, []);
+
+
+//   useEffect(() => {
+//   const refresh = async () => {
+//     try {
+//       const res = await axios.post(
+//         `${API}/api/v1/refresh`,
+//         {},
+//         { withCredentials: true }
+//       );
+
+//       // 🔥 new access token store karo
+//       localStorage.setItem("accessToken", res.data.accessToken);
+
+//     } catch (err) {
+//       console.log("Not logged in");
+//     }
+//   };
+
+//   refresh();
+// }, []);
+
+useEffect(() => {
+  const getUser = async () => {
+    try {
+      const res = await axios.get(
+        `${API}/api/v1/me`,
+        { withCredentials: true }
+      );
+
+      setUser(res.data.user);
+
+    } catch (err) {
 
       try {
+        // 🔥 try refresh
+        await axios.post(
+          `${API}/api/v1/refresh`,
+          {},
+          { withCredentials: true }
+        );
 
+        // 🔥 retry /me
         const res = await axios.get(
           `${API}/api/v1/me`,
           { withCredentials: true }
@@ -46,42 +111,18 @@ function App() {
 
         setUser(res.data.user);
 
-      } catch (err) {
-
+      } catch {
         setUser(null);
-
-      } finally {
-
-        setLoading(false);
-
       }
 
-    };
-
-    getUser();
-
-  }, []);
-
-
-  useEffect(() => {
-  const refresh = async () => {
-    try {
-      const res = await axios.post(
-        `${API}/api/v1/refresh`,
-        {},
-        { withCredentials: true }
-      );
-
-      // 🔥 new access token store karo
-      localStorage.setItem("accessToken", res.data.accessToken);
-
-    } catch (err) {
-      console.log("Not logged in");
+    } finally {
+      setLoading(false);
     }
   };
 
-  refresh();
+  getUser();
 }, []);
+
 
   // ✅ loading check yaha hoga
   if (loading) {

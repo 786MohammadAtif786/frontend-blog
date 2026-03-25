@@ -57,7 +57,9 @@ export default function Login() {
         }
 
     };
-
+    // if (!form.email || !form.password) {
+    //     return toast.error("All fields are required");
+    // }
     return (
 
         <>
@@ -82,6 +84,7 @@ export default function Login() {
 
                     <input
                         name="email"
+                        value={form.email}
                         onChange={handleChange}
                         placeholder="Enter your email"
                         className="w-full border p-2 mb-3 rounded"
@@ -90,6 +93,7 @@ export default function Login() {
                     <input
                         name="password"
                         type="password"
+                        value={form.password}
                         onChange={handleChange}
                         placeholder="Enter password"
                         className="w-full border p-2 mb-3 rounded"
@@ -112,10 +116,10 @@ export default function Login() {
                         </Link>
                     </p>
 
-                    
 
 
-                <p className="text-right text-sm mb-3 p-4">
+
+                    <p className="text-right text-sm mb-3 p-4">
                         <Link to="/forgot-password" className="text-purple-600 font-semibold">
                             Forgot Password?
                         </Link>
