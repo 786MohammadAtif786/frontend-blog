@@ -19,8 +19,19 @@ export default function Navbar() {
   };
     const API = import.meta.env.VITE_API_URL;
 
-  const handleLogout = async () => {
+  // const handleLogout = async () => {
 
+  //   await axios.post(
+  //     `${API}/api/v1/logout`,
+  //     {},
+  //     { withCredentials: true }
+  //   );
+
+  //   window.location.reload();
+  // };
+
+  const handleLogout = async () => {
+  try {
     await axios.post(
       `${API}/api/v1/logout`,
       {},
@@ -28,7 +39,10 @@ export default function Navbar() {
     );
 
     window.location.reload();
-  };
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   useEffect(() => {
 
