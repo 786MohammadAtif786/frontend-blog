@@ -203,14 +203,27 @@ export default function Login() {
     try {
       setLoading(true);
 
-      await axios.post(
-        `${API}/api/v1/login`,
-        form,
-        { withCredentials: true }
-      );
+    //   await axios.post(
+    //     `${API}/api/v1/login`,
+    //     form,
+    //     { withCredentials: true }
+    //   );
+    //   setTimeout(() => {
+    //   navigate("/");
+    // }, 1000);
+
+    //   toast.success("Login successful");
+    //   navigate("/");
+
+        await axios.post(
+      `${API}/api/v1/login`,
+      form,
+      { withCredentials: true }
+    );
 
       toast.success("Login successful");
-      navigate("/");
+
+      window.location.href = "/";
 
     } catch (err) {
       const status = err.response?.status;
