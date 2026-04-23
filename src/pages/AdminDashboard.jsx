@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 export default function AdminDashboard() {
   const [blogs, setBlogs] = useState([]);
     const API = import.meta.env.VITE_API_URL;
-
+  console.log("Hello");
+  
   useEffect(() => {
     const fetchBlogs = async () => {
       const res = await axios.get(
