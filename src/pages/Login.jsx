@@ -144,8 +144,8 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
-
-
+ //const API = import.meta.env.VITE_API_URL;
+  const API = "https://backend-blog-9qq5.onrender.com"
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -204,7 +204,7 @@ export default function Login() {
       setLoading(true);
 
       await axios.post(
-        `${API}`,
+        `${API}/api/v1/login`,
         form,
         { withCredentials: true }
       );
