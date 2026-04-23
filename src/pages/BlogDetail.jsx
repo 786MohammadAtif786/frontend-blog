@@ -172,7 +172,7 @@ export default function BlogDetail() {
             <span>•</span>
             <span>{new Date(blog.createdAt).toDateString()}</span>
             <span>• {readingTime} min read</span>
-            <span>👁 {blog.views} views</span>
+            {/* <span>👁 {blog.views} views</span> */}
           </div>
 
           {/* Image */}
