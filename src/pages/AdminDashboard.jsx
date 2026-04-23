@@ -173,8 +173,35 @@ export default function AdminDashboard() {
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
 
-      <Navbar />
-      <h1 className="text-2xl font-bold mb-6 text-center">Admin Dashboard</h1>
+
+<div className="bg-gray-100 min-h-screen">
+
+  {/* 🔥 Navbar */}
+  <div className="bg-white shadow mb-6">
+    <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+
+      <h1 className="text-xl font-bold text-purple-600">
+        Admin Dashboard
+      </h1>
+
+      <div className="flex gap-3">
+
+        <Link to="/" className="bg-gray-200 px-4 py-2 rounded">
+          🏠 Home
+        </Link>
+
+        <Link to="/blogs" className="bg-purple-500 text-white px-4 py-2 rounded">
+          Blogs
+        </Link>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+      {/* <h1 className="text-2xl font-bold mb-6 text-center">Admin Dashboard</h1> */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         {currentBlogs.map((blog) => (
