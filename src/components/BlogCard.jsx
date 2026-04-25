@@ -11,6 +11,7 @@ export default function BlogCard({ blog }) {
 
                 <img
                     src={blog.image}
+                    loading="lazy" 
                     className="w-full h-48 object-cover rounded-t-xl"
                 />
 

@@ -126,21 +126,35 @@ import Navbar from "../components/Navbar";
 export default function AdminDashboard() {
   const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const API = import.meta.env.VITE_API_URL;
 
   const blogsPerPage = 6;
 
+
+
   useEffect(() => {
-    const fetchBlogs = async () => {
+  const fetchBlogs = async () => {
+    try {
       const res = await axios.get(
         `${API}/api/blogs/admin`,
         { withCredentials: true }
       );
-      setBlogs(res.data);
-    };
-    fetchBlogs();
-  }, []);
+
+      // ⏳ 3 sec delay
+      setTimeout(() => {
+        setBlogs(res.data);
+        setLoading(false);
+      }, 1000);
+
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
+  fetchBlogs();
+}, []);
 
   // 🔢 Pagination logic
   const indexOfLast = currentPage * blogsPerPage;
@@ -169,6 +183,16 @@ export default function AdminDashboard() {
 
     setBlogs((prev) => prev.filter((b) => b._id !== id));
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <h1 className="text-2xl font-bold animate-pulse">
+          Loading Admin Dashboard...
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
