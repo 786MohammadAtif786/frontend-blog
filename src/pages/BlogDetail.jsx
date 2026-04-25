@@ -209,21 +209,29 @@ export default function BlogDetail() {
       <div className="w-full lg:w-80 bg-white border-t lg:border-l p-4 lg:p-6 mt-6 lg:mt-0">
 
         {/* Like Button */}
-        <button
+        {/* <button
           onClick={handleLike}
           disabled={blog.author?._id === user?._id}
-          className="w-full bg-purple-600 text-white py-2 rounded-lg mb-6 hover:bg-purple-700"
+          className="w-full bg-cyan-600 text-white py-2 rounded-lg mb-6 hover:bg-purple-700"
         >
           👍 Like ({likes})
-        </button>
+        </button> */}
+        <button
+        onClick={handleLike}
+        disabled={blog.author?._id === user?._id}
+        className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-cyan-100 transition cursor-pointer"
+      >
+        <span className="text-red-500 text-lg">❤️</span>
+        <span className="text-sm font-medium text-gray-700">{likes}</span>
+      </button>
 
         {/* Categories */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-6 mt-10">
           {blog.categories?.map((cat) => (
             <Link
               key={cat}
               to={`/category/${cat}`}
-              className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm hover:bg-purple-200 transition"
+              className="bg-purple-100 text-cyan-700 px-3 py-1 rounded-full text-sm hover:bg-cyan-100 transition"
             >
               {cat}
             </Link>
