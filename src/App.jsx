@@ -113,9 +113,15 @@ useEffect(() => {
             </PublicRoute>
           }
         />
-                <Route path="/my-blogs" element={<MyBlogs />} />
-
-
+         {/* <Route path="/my-blogs" element={<MyBlogs />} /> */}
+         <Route
+            path="/my-blogs"
+            element={
+              <ProtectedRoute user={user}>
+                <MyBlogs />
+              </ProtectedRoute>
+            }
+          />
         <Route
           path="/write"
           element={
