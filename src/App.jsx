@@ -27,7 +27,7 @@ import Users from "./pages/Users.jsx";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { useLocation } from "react-router-dom";
-
+import Settings from './pages/Settings.jsx';
 
 function App() {
 
@@ -131,6 +131,14 @@ useEffect(() => {
             </ProtectedRoute>
           }
         />
+        <Route
+        path="/settings"
+        element={
+          <ProtectedRoute user={user}>
+            <Settings />
+          </ProtectedRoute>
+        }
+/>
 
         <Route
           path="/admin"
