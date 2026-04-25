@@ -26,63 +26,19 @@ import SearchPage from "./pages/SearchPage.jsx"
 import Users from "./pages/Users.jsx";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import { useLocation } from "react-router-dom";
 
 
 function App() {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+    const location = useLocation();
 
   const API = import.meta.env.VITE_API_URL;
-//   useEffect(() => {
+    const hideFooterRoutes = ["/login", "/register", "/forgot-password"];
 
-//     const getUser = async () => {
-
-//       try {
-
-//         const res = await axios.get(
-//           `${API}/api/v1/me`,
-//           { withCredentials: true }
-//         );
-
-//         setUser(res.data.user);
-
-//       } catch (err) {
-
-//         setUser(null);
-
-//       } finally {
-
-//         setLoading(false);
-
-//       }
-
-//     };
-
-//     getUser();
-
-//   }, []);
-
-
-//   useEffect(() => {
-//   const refresh = async () => {
-//     try {
-//       const res = await axios.post(
-//         `${API}/api/v1/refresh`,
-//         {},
-//         { withCredentials: true }
-//       );
-
-//       // 🔥 new access token store karo
-//       localStorage.setItem("accessToken", res.data.accessToken);
-
-//     } catch (err) {
-//       console.log("Not logged in");
-//     }
-//   };
-
-//   refresh();
-// }, []);
+     const hideFooter = hideFooterRoutes.includes(location.pathname);
 
 useEffect(() => {
   const getUser = async () => {
@@ -132,7 +88,7 @@ useEffect(() => {
 
   return (
 
-    <BrowserRouter>
+<>
 
       <Toaster position="top-centers" />
 
@@ -205,11 +161,12 @@ useEffect(() => {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-        <Footer />
-    </BrowserRouter>
+      {!hideFooter && <Footer />}
 
-  );
+  
 
+</>
+  )
 }
 
 export default App;
