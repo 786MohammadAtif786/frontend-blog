@@ -278,7 +278,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-purple-600 text-white py-2"
+            className="w-full bg-[#157A9E] hover:bg-[#136b89] text-white py-2"
           >
             {/* {loading ? "Logging in..." : "Login"} */}
             {/* {loading ? (
@@ -299,7 +299,7 @@ export default function Login() {
 
           </button>
                  <p className="text-right text-sm mb-3 p-4">
-                         <Link to="/forgot-password" className="text-purple-600 font-semibold">
+                         <Link to="/forgot-password" className="text-cyan-800 font-semibold">
                              Forgot Password?
                          </Link>
                     </p> 
@@ -308,7 +308,7 @@ export default function Login() {
                          Don't have an account?{" "}
                          <Link
                              to="/register"
-                             className="text-purple-600 font-semibold"
+                             className="text-cyan-800 font-semibold"
                          >
                              Register
                          </Link>

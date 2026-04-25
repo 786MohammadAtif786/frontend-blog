@@ -97,7 +97,7 @@ export default function Register() {
             {/* बाकी UI */}
             <p className="text-sm text-center mt-2">
                 Go back to{" "}
-                <Link to="/" className="text-purple-600 font-semibold">
+                <Link to="/" className="text-cyan-800 font-semibold">
                     Home
                 </Link>
             </p>
@@ -109,14 +109,14 @@ export default function Register() {
                 >
 
                     <h3 className="p-3 text-center text-lg font-semibold">
-                        Welcome to Register
+                        Welcome to Dev Notes
                     </h3>
 
                     <input
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Enter your name"
+                        placeholder="john dee"
                         className="w-full border p-2 mb-3 rounded"
                     />
 
@@ -124,7 +124,7 @@ export default function Register() {
                         name="email"
                         value={form.email}
                         onChange={handleChange}
-                        placeholder="Enter your email"
+                        placeholder="example@example.com"
                         className="w-full border p-2 mb-3 rounded"
                     />
 
@@ -133,13 +133,13 @@ export default function Register() {
                         value={form.password}
                         type="password"
                         onChange={handleChange}
-                        placeholder="Enter password"
+                        placeholder="********"
                         className="w-full border p-2 mb-3 rounded"
                     />
 
                     <button
                         disabled={loading}
-                        className="w-full bg-purple-600 text-white py-2 rounded"
+                        className="w-full bg-[#157A9E] hover:bg-[#136b89] text-white py-2 rounded"
                     >
                         {loading ? "Please wait..." : "Submit"}
                     </button>
@@ -148,7 +148,7 @@ export default function Register() {
                         Already have an account?{" "}
                         <Link
                             to="/login"
-                            className="text-purple-600 font-semibold"
+                            className="text-cyan-800 font-semibold"
                         >
                             Login
                         </Link>

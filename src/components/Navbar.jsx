@@ -69,7 +69,7 @@ export default function Navbar() {
           <img src={logImg} alt="logo" className="w-8 h-8" />
           <h1 className="text-xl font-bold">
             <span className="text-green-500">Dev</span>
-            <span className="text-blue-600">Notes</span>
+            <span className="text-cyan-600">Notes</span>
           </h1>
         </Link>
 
@@ -80,14 +80,14 @@ export default function Navbar() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={handleSearch}
-          className="hidden md:block w-1/3 border px-4 py-2 rounded"
+          className="hidden md:block w-1/3 border px-4 py-2 rounded-3xl border-cyan-500"
         />
 
         {/* 🔥 Right Side */}
         {authLoading ? (
           // 🔄 Spinner
           <div className="w-10 h-10 flex items-center justify-center">
-            <div className="w-5 h-5 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-5 h-5 border-2 border-cyan-800 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : user ? (
           <div className="relative">
@@ -144,7 +144,7 @@ export default function Navbar() {
         ) : (
           <Link
             to="/login"
-            className="bg-purple-600 text-white px-4 py-2 rounded-full"
+            className="bg-[#157A9E] hover:bg-[#136b89] text-white px-4 py-2 rounded-full"
           >
             Sign In
           </Link>

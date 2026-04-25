@@ -58,7 +58,7 @@ export default function ForgotPassword() {
 
                 <button
                     disabled={loading}
-                    className="w-full bg-purple-600 text-white py-2 rounded"
+                    className="w-full bg-[#157A9E] hover:bg-[#136b89] text-white py-2 rounded"
                 >
                     {loading ? "Sending..." : "Send Reset Link"}
                 </button>
