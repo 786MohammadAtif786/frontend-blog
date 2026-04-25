@@ -61,7 +61,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="bg-white shadow px-6 py-3">
+    <div className="w-full bg-gray-100 shadow px-6 py-3 rounded-md">
       <div className="flex items-center justify-between">
 
         {/* 🔥 Logo */}

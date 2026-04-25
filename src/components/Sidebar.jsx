@@ -15,22 +15,22 @@ const categories = [
 
 export default function Sidebar() {
   return (
-    <div className="w-64 bg-white border-r h-screen p-5 hidden md:block">
+    <div className="w-64 bg-gray-100 border-r h-screen p-5 hidden md:block">
 
    
       <ul className="space-y-3">
 
-        <li>
+        {/* <li>
           <Link
             to="/"
             className="text-gray-700 hover:text-purple-600"
           >
             Home
           </Link>
-        </li>
+        </li> */}
 
 
-        <li>
+        {/* <li>
           <Link
             to="/my-blogs"
             className="text-gray-700 hover:text-purple-600"
@@ -46,32 +46,22 @@ export default function Sidebar() {
           >
             Comments
           </Link>
-        </li>
+        </li> */}
 
       </ul>
 
-      <h2 className="mt-8 font-semibold text-gray-500">
+      <h2 className="mt-8 font-semibold text-cyan-800">
         Categories
       </h2>
 
       <ul className="mt-4 space-y-2">
 
-        {/* {categories.map((cat) => (
-          <li key={cat}>
-            <Link
-              to="/"
-              className="text-gray-600 hover:text-purple-600"
-            >
-              {cat}
-            </Link>
-          </li>
-        ))} */}
-
+    
         {categories.map((cat) => (
           <li key={cat}>
             <Link
-              to={`/category/${cat}`}   // 🔥 yaha change
-              className="text-gray-600 hover:text-purple-600"
+              to={`/category/${cat}`} 
+              className="text-gray-600 hover:text-cyan-800"
             >
               {cat}
             </Link>
