@@ -13,6 +13,11 @@ export default function ForgotPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+          if (!email) {
+                toast.error("Email is required");
+                return;
+        }
+
         try {
             setLoading(true);
 
