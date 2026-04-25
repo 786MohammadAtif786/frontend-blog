@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import  './App.css'
 
 import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
@@ -133,7 +134,7 @@ useEffect(() => {
 
     <BrowserRouter>
 
-      <Toaster position="top-right" />
+      <Toaster position="top-centers" />
 
       <Routes>
 
