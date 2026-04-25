@@ -1,63 +1,76 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function Settings() {
+  const [tab, setTab] = useState("account");
+  const navigate = useNavigate();
   const API = import.meta.env.VITE_API_URL;
 
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 👤 load current user
+  // 🔥 Load user
   useEffect(() => {
     const fetchUser = async () => {
-      try {
-        const res = await axios.get(`${API}/api/v1/me`, {
-          withCredentials: true,
-        });
+      const res = await axios.get(`${API}/api/v1/me`, {
+        withCredentials: true,
+      });
 
-        setForm({
-          ...form,
-          name: res.data.user.name,
-          email: res.data.user.email,
-        });
-      } catch (err) {
-        console.log(err);
-      }
+      setForm({
+        name: res.data.user.name,
+        email: res.data.user.email,
+        password: "",
+        confirmPassword: "",
+      });
+
+      setPreview(res.data.user.profilePic || "");
     };
 
     fetchUser();
   }, []);
 
-  // ✏️ change handler
+  // ✏️ input change
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 💾 update profile
+  // 🖼️ image
+  const handleFile = (e) => {
+    const img = e.target.files[0];
+    setFile(img);
+    if (img) setPreview(URL.createObjectURL(img));
+  };
+
+  // 💾 submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.name || !form.email) {
-      return toast.error("Name & Email required");
+    if (form.password && form.password !== form.confirmPassword) {
+      return toast.error("Passwords do not match");
     }
 
     try {
       setLoading(true);
 
-      await axios.put(
-        `${API}/api/v1/update-profile`,
-        form,
-        { withCredentials: true }
-      );
+      const data = new FormData();
+
+      if (form.name) data.append("name", form.name);
+      if (form.password) data.append("password", form.password);
+      if (file) data.append("image", file);
+
+      await axios.put(`${API}/api/v1/update-profile`, data, {
+        withCredentials: true,
+      });
 
       toast.success("Profile updated");
     } catch (err) {
@@ -68,74 +81,120 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+    <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
+      <div className="w-full max-w-xl">
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl shadow w-full max-w-md"
-      >
-        <h2 className="text-2xl font-bold mb-6">
-          ⚙️ Account Settings
-        </h2>
-
-        {/* Name */}
-        <input
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Name"
-          className="w-full border p-2 mb-3 rounded"
-        />
-
-        {/* Email */}
-        <input
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          placeholder="Email"
-          disabled
-          className="w-full border p-2 mb-3 rounded"
-        />
-
-        {/* Password */}
-        <input
-          name="password"
-          type="password"
-          value={form.password}
-          onChange={handleChange}
-          placeholder="New Password (optional)"
-          className="w-full border p-2 mb-4 rounded"
-        />
-
-
-                        <input
-                type="file"
-                onChange={async (e) => {
-                    const file = e.target.files[0];
-
-                    const formData = new FormData();
-                    formData.append("image", file);
-
-                    await axios.put(
-                    `${API}/api/v1/upload-profile`,
-                    formData,
-                    { withCredentials: true }
-                    );
-
-                    alert("Profile updated");
-                    window.location.reload();
-                }}
-                />
-
+        {/* 🔙 Back */}
         <button
-          disabled={loading}
-          className="w-full bg-[#157A9E] text-white py-2 mt-10 rounded hover:bg-[#136b89]"
+          onClick={() => navigate(-1)}
+          className="mb-4 text-cyan-700 font-medium hover:underline"
         >
-          {loading ? "Saving..." : "Save Changes"}
+          ← Back
         </button>
 
-      </form>
+        {/* 🔥 Tabs */}
+        <div className="flex bg-white rounded-xl shadow mb-6 overflow-hidden">
+          <button
+            onClick={() => setTab("account")}
+            className={`flex-1 py-3 ${
+              tab === "account" ? "bg-[#157A9E] text-white" : "text-gray-600"
+            }`}
+          >
+            🧑 Account
+          </button>
 
+          <button
+            onClick={() => setTab("danger")}
+            className={`flex-1 py-3 ${
+              tab === "danger" ? "bg-red-500 text-white" : "text-gray-600"
+            }`}
+          >
+            🚨 Danger Zone
+          </button>
+        </div>
+
+        {/* 🧑 Account */}
+        {tab === "account" && (
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white p-6 rounded-xl shadow"
+          >
+            <h2 className="text-xl font-bold mb-4">
+              Account Settings
+            </h2>
+
+            {/* 🖼️ Image */}
+            <div className="flex flex-col items-center mb-4">
+              <img
+                src={preview || "https://via.placeholder.com/100"}
+                className="w-24 h-24 rounded-full object-cover mb-2"
+              />
+              <input type="file" onChange={handleFile} />
+            </div>
+
+            {/* Name */}
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Name (optional)"
+              className="w-full border p-2 mb-3 rounded"
+            />
+
+            {/* Email (disabled) */}
+            <input
+              value={form.email}
+              disabled
+              className="w-full border p-2 mb-3 rounded bg-gray-100"
+            />
+
+            {/* Password */}
+            <input
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={handleChange}
+              placeholder="New Password (optional)"
+              className="w-full border p-2 mb-3 rounded"
+            />
+
+            {/* Confirm Password */}
+            <input
+              name="confirmPassword"
+              type="password"
+              value={form.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm Password"
+              className="w-full border p-2 mb-4 rounded"
+            />
+
+            <button
+              disabled={loading}
+              className="w-full bg-[#157A9E] text-white py-2 rounded hover:bg-[#136b89]"
+            >
+              {loading ? "Saving..." : "Save Changes"}
+            </button>
+          </form>
+        )}
+
+        {/* 🚨 Danger Zone */}
+        {tab === "danger" && (
+          <div className="bg-red-50 border border-red-200 p-6 rounded-xl">
+            <h2 className="text-xl font-bold text-red-600 mb-2">
+              Danger Zone
+            </h2>
+
+            <p className="text-gray-600 mb-4">
+              Deactivate your account.
+            </p>
+
+            <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+              Delete Account
+            </button>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }
