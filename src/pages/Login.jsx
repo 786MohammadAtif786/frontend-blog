@@ -198,6 +198,16 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!form.email) {
+    toast.error("Email is required");
+    return;
+  }
+
+  if (!form.password) {
+    toast.error("Password is required");
+    return;
+  }
+
     if (loading || blocked) return;
 
     try {
@@ -282,7 +292,23 @@ export default function Login() {
             disabled={loading}
             className="w-full bg-purple-600 text-white py-2"
           >
-            {loading ? "Logging in..." : "Login"}
+            {/* {loading ? "Logging in..." : "Login"} */}
+            {/* {loading ? (
+  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+) : (
+  "Login"
+)} */}
+
+
+        {loading ? (
+          <span className="flex items-center justify-center gap-2">
+            <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            Logging in...
+          </span>
+        ) : (
+          "Login"
+        )}
+
           </button>
                  <p className="text-right text-sm mb-3 p-4">
                          <Link to="/forgot-password" className="text-purple-600 font-semibold">
