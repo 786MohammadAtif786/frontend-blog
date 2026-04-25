@@ -120,8 +120,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AdminDashboard() {
   const [blogs, setBlogs] = useState([]);
@@ -132,7 +131,7 @@ export default function AdminDashboard() {
 
   const blogsPerPage = 6;
 
-
+const navigate = useNavigate();
 
   useEffect(() => {
   const fetchBlogs = async () => {
@@ -196,7 +195,12 @@ export default function AdminDashboard() {
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
-
+      <button
+          onClick={() => navigate(-1)}
+          className="bg-gray-700 text-white px-4 py-2 rounded mb-4"
+        >
+      ← Back
+    </button>
       <h1 className="text-2xl font-bold mb-6 text-center">Admin Dashboard</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
