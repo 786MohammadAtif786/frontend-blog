@@ -284,10 +284,22 @@ export default function Login() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+                 <p className="text-right text-sm mb-3 p-4">
+                         <Link to="/forgot-password" className="text-purple-600 font-semibold">
+                             Forgot Password?
+                         </Link>
+                    </p> 
+       
+                           <p className="text-sm text-center mt-4">
+                         Don't have an account?{" "}
+                         <Link
+                             to="/register"
+                             className="text-purple-600 font-semibold"
+                         >
+                             Register
+                         </Link>
+                     </p>
 
-          <p className="mt-3 text-center">
-            <Link to="/register">Register</Link>
-          </p>
         </form>
       )}
     </div>
